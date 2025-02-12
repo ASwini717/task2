@@ -1,0 +1,25 @@
+#include <iostream>
+#include <filesystem>
+
+namespace fs = std::filesystem;
+using namespace std;
+
+void listFiles(const fs::path& directory) {
+    cout << "Contents of " << directory << ":\n";
+    for (const auto& entry : fs::directory_iterator(directory)) {
+        cout << (entry.is_directory() ? "[DIR]  " : "[FILE] ") << entry.path().filename() << '\n';
+    }
+}
+
+int main() {
+    string path;
+    cout << "Enter directory path: ";
+    cin >> path;
+
+    if (fs::exists(path) && fs::is_directory(path)) {
+        listFiles(path);
+    } else {
+        cout << "Invalid directory!" << endl;
+    }
+    return 0;
+}
